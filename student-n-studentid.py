@@ -27,17 +27,17 @@ conn.commit()
 
 def course(coursename,studyarea):
     acourse = ('INSERT INTO course'
-              '(coursename, studyarea)'
+              '(course_id, coursename, studyarea)'
               'VALUES (?,?)')
     cursor.execute(acourse,(coursename,studyarea))
     course_id = cursor.lastrowid
     conn.commit()
     print('The course id is:', course_id)
 
-def student (name,created,age,cpf):
+def student (name,created,age,cpf,course_id):
     astudent = ('INSERT INTO student'
-                '(name, created, age, cpf)'
-                'VALUES (?,?,?,?)')
+                '(name, created, age, cpf, course_id)'
+                'VALUES (?,?,?,?,?)')
     cursor.execute (astudent,(name,created,age,cpf))
     student_id = cursor.lastrowid
     conn.commit()
@@ -47,12 +47,12 @@ def update_course(course_id,coursename,studyarea):
     ucourse = ('UPDATE course '
             'SET coursename = ?, studyarea = ? '
             'WHERE course_id = ?')
-    cursor.execute(ucourse,(coursename,studyarea,course_id))
+    cursor.execute(ucourse,(course_id,coursename,studyarea))
     conn.commit()
 
-def update_student(name,created,age,cpf,student_id):
+def update_student(name,created,age,cpf,course_id,student_id):
     ustudent = ('UPDATE student '
-            'SET name = ?, created = ?, age = ?, cpf = ? '
+            'SET name = ?, created = ?, age = ?, cpf = ?, course_id = ?'
             'WHERE student_id = ?')
     cursor.execute(ustudent,(name,created,age,cpf,student_id))
     conn.commit()
